@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<ul>
+    {% for n in notas %}
+        <li><a href="{% url 'notepad:nota' n.id %}">{{n.title}}</a></li>
+    {% endfor %}
+
+</ul>
+{% endblock %}
