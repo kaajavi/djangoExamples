@@ -71,7 +71,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'sexto2016.wsgi.application'
+WSGI_APPLICATION = 'notepad.wsgi.application'
 
 
 # Database
