@@ -71,7 +71,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'notepad.wsgi.application'
+WSGI_APPLICATION = 'notepadProject.wsgi.application'
 
 
 # Database
