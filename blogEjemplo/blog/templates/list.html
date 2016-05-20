@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block sidebar %}
+    <style type="text/css">
+        #sidebar { float: right; border: 1px dotted #ccc; padding: 4px; }
+        a { margin-left: 15px; }
+    </style>
+    <div id="sidebar">
+        Monthly Archive
+        <p>
+        {% for month in months %}
+            {% ifchanged month.0 %} {{ month.0 }} <br /> {% endifchanged %}
+
+        {% endfor %}
+        </p>
+    </div>
+{% endblock %}
+
+{% block content %}
+
+
+
+
+    <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                {% for post in post_list %}
+                <div class="post-preview">
+                    <a href="post.html">
+                        <h2 class="post-title">
+                            {{ post.title }}
+                        </h2>
+                        <h3 class="post-subtitle">
+                            {{ post.body|linebreaks }}
+                        </h3>
+                    </a>
+                    <p class="post-meta">Fecha: {{ post.created }}</p>
+                </div>
+                <hr>
+                 {% endfor %}
+        </div>
+</div>
+
+
+
+
+
+
+        <!-- Next/Prev page links  -->
+        {% if not archive and posts.object_list and posts.paginator.num_pages > 1 %}
+        <div class="pagination">
+            <span class="step-links">
+                {% if posts.has_previous %}
+                    <a href= "?page={{ posts.previous_page_number }}">Entradas mas nuevas &lt;&lt; </a>
+                {% endif %}
+
+                <span class="current">
+                    &nbsp;Pagina {{ posts.number }} de {{ posts.paginator.num_pages }}
+                </span>
+
+                {% if posts.has_next %}
+                    <a href="?page={{ posts.next_page_number }}"> &gt;&gt; Post mas viejitos</a>
+                {% endif %}
+            </span>
+        </div>
+        {% endif %}
+
+
+
+{% endblock %}

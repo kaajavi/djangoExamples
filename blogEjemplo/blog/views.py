@@ -7,37 +7,36 @@ from django.contrib.auth.decorators import login_required
 from django.core.context_processors import csrf
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.core.urlresolvers import reverse
+from django.template import RequestContext
 
 from blog.models import *
 from django.forms import ModelForm
 
+def main(request):
+    """Main listing."""
+    context = RequestContext(request)
+    posts = Post.objects.all().order_by("-created")
+    paginator = Paginator(posts, 3)
+    try: page = int(request.GET.get("page", '1'))
+    except ValueError: page = 1
+
+    try:
+        posts = paginator.page(page)
+    except (InvalidPage, EmptyPage):
+        posts = paginator.page(paginator.num_pages)
+
+    context.update(dict(posts=posts, user=request.user,
+                        post_list=posts.object_list, months=mkmonth_lst()))
+    return render_to_response("list.html", context)
+
 def post(request, pk):
     """Single post with comments and a comment form."""
+    context = RequestContext(request)
     post = Post.objects.get(pk=pk)
     #comments = Comment.objects.filter(post=post)
-    d = dict(post=post, form=CommentForm(), user=request.user)#, comments=comments)
-    d.update(csrf(request))
-    return render_to_response("blog/post.html", d)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    context.update(dict(post=post, form=CommentForm(), user=request.user))#, comments=comments)
+    context.update(csrf(request))
+    return render_to_response("blog/post.html", context)
 
 
 
@@ -105,17 +104,4 @@ def month(request, year, month):
     return render_to_response("list.html", dict(post_list=posts, user=request.user,
                                                 months=mkmonth_lst(), archive=True))
 
-def main(request):
-    """Main listing."""
-    posts = Post.objects.all().order_by("-created")
-    paginator = Paginator(posts, 10)
-    try: page = int(request.GET.get("page", '1'))
-    except ValueError: page = 1
 
-    try:
-        posts = paginator.page(page)
-    except (InvalidPage, EmptyPage):
-        posts = paginator.page(paginator.num_pages)
-
-    return render_to_response("list.html", dict(posts=posts, user=request.user,
-                                                post_list=posts.object_list, months=mkmonth_lst()))

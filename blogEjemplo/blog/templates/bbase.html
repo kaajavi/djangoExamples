@@ -45,20 +45,20 @@
     <div id="sidebar"> {% block sidebar %} {% endblock %} </div>
     <div id="container">
         <h1>Este es el blog de sexto</h1>
-        <div id="menu">            
+        <div id="menu">
             {% block nav-global %}
-                
+
                 <!-- MENU -->
-                
+
                 <h2>Si no te gusta el estilo, cambialo...</h2>
                 {% if user.is_staff %}
-                
+
                 {% endif %}
 
             {% endblock %}
         </div>
 
-        <div id="content">            
+        <div id="content">
             {% block content %}{% endblock %}
         </div>
     </div>
