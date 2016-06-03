@@ -5,6 +5,6 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     # Examples:
-    url(r'^$', 'blog.views.main', name='home'),    
+    url(r'^', include('blog.urls', namespace='home')), 
     url(r'^admin/', include(admin.site.urls)), 
 )

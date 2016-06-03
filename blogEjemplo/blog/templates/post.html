@@ -1,4 +1,4 @@
-{% extends "bbase.html" %}
+{% extends "base.html" %}
 
 {% block content %}
     <style type="text/css">
@@ -41,14 +41,14 @@
                 <p>Comments:</p>
             {% endif %}
 
-            <form action="{% url blog.views.delete_comment post.pk %}" method="POST">{% csrf_token %}
+            <form action="" method="POST">{% csrf_token %}
             {% for comment in comments %}
                 <div class="comment">
                     <div class="time">{{ comment.created }} | {{ comment.author }}</div>
                     <div class="body">{{ comment.body|linebreaks }}</div>
                     {% if user.is_staff %}
                         <input type="checkbox" name="delete" value="{{ comment.pk }}">
-                        <a href="{% url blog.views.delete_comment post.pk comment.id %}">delete</a>
+                        <a href="">delete</a>
                     {% endif %}
                 </div>
             {% endfor %}
@@ -59,14 +59,17 @@
             {% endif %}
             </form>
 
-            <div id="addc">Add a comment</div>
+            <div id="addc">Mete un comentario</div><hr>
             <!-- Comment form  -->
-            <form action="{% url blog.views.add_comment post.id %}" method="POST">{% csrf_token %}
-                <div id="cform">
-                    Name: {{ form.author }}
-                    <p>{{ form.body|linebreaks }}</p>
-                </div>
+            <form action="" method="POST">
+            
+                {% csrf_token %}
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Autor" name='author' aria-describedby="basic-addon1"/>
+                    <textarea class="form-control" placeholder="Contenido" name='content' aria-describedby="basic-addon1"></textarea>
+</div>
                 <div id="submit"><input type="submit" value="Submit"></div>
+            
             </form>
         </ul>
 

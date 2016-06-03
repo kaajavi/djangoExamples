@@ -34,7 +34,7 @@ class PostAdmin(admin.ModelAdmin):
     display_fields = ["title", "created","categorias"]
     
 #NO IMPLEMENTADO    
-'''class Comment(models.Model):
+class Comment(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     author = models.CharField(max_length=60)
     body = models.TextField()
@@ -45,7 +45,7 @@ class PostAdmin(admin.ModelAdmin):
 
     
     
-    
+    '''
     #ESTO ES PARA ENVIAR UN MAIL CADA VEZ QUE ALQUIEN COMENTA
     #TODO: NO ESTÁ IMPLEMENTADO
     def save(self, *args, **kwargs):

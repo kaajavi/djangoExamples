@@ -29,14 +29,23 @@ def main(request):
                         post_list=posts.object_list, months=mkmonth_lst()))
     return render_to_response("list.html", context)
 
-def post(request, pk):
+def post(request, id_post):
     """Single post with comments and a comment form."""
     context = RequestContext(request)
-    post = Post.objects.get(pk=pk)
-    #comments = Comment.objects.filter(post=post)
-    context.update(dict(post=post, form=CommentForm(), user=request.user))#, comments=comments)
+    post = Post.objects.get(pk=id_post)
+    print request.method
+    if 'POST' in request.method:
+        author = request.POST['author']
+        content = request.POST['content']
+        comentario = Comment(author=author, 
+                             body=content,
+                             post=post)
+        comentario.save()
+    comments = Comment.objects.filter(post=post)
+    #form=CommentForm()
+    context.update(dict(post=post, user=request.user, comments=comments))#, comments=comments)
     context.update(csrf(request))
-    return render_to_response("blog/post.html", context)
+    return render_to_response("post.html", context)
 
 
 

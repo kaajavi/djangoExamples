@@ -3,10 +3,8 @@ from blog.models import *
 from blog.views import *
 
 urlpatterns = patterns('',
-   (r"^(\d+)/$", "post"),
-   (r"^add_comment/(\d+)/$", "add_comment"),
-   (r"^delete_comment/(\d+)/$", "delete_comment"),
-   (r"^delete_comment/(\d+)/(\d+)/$", "delete_comment"),
-   (r"^month/(\d+)/(\d+)/$", "month"),
-   (r"", "blog.main"),
+   url(r'^post/(?P<id_post>\d+)/$', 
+       'blog.views.post', 
+       name='post'),
+   url(r"", "blog.views.main"),
 )
